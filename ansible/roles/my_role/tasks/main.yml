@@ -1,0 +1,21 @@
+- name: Ensure group "devopsmeetup" exists
+  group:
+    name: devopsmeetup
+    state: present
+
+
+- name: Add the user 'dev' to 'devopsmeetup'
+  user:
+    name: dev
+    comment: Dev Ansible
+    group: devopsmeetup
+
+
+- template:
+    src: ports.conf.j2
+    dest: /etc/apache2/ports.conf
+  notify: restart apache
+
+- template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
